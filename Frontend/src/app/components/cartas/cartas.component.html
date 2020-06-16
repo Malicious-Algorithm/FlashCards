@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-body">
+                    <!-- ngSubmit para que ejecute el evento del form cuando enviemos los datos -->
+                        <!-- defino una variable y le asigno el formulario para dárselo como parametro a addCarta() -->
+                    <form #cartaForm="ngForm" (ngSubmit)="addCarta(cartaForm)">
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="cartaService.selectedCarta._id"> 
+                        <div class="row">
+                             <div class="col-12">
+                                 <label for="ejemplo">Palabra o Texto:</label>
+                                 <input type="text" class="form-control" id="ejemplo" name="palabra" #palabra="ngModel" [(ngModel)]="cartaService.selectedCarta.palabra" placeholder="Ingresa la palabra extranjera">
+                             </div>
+                             <div class="col-12">
+                                 <br>
+                                 <label for="ejemplo2">Significado:</label>
+                                <input type="text" class="form-control" id="ejemplo2" name="palabraTrad" #palabraTrad="ngModel" [(ngModel)]="cartaService.selectedCarta.palabraTrad" placeholder="Ingresa la traducción de la palabra en tu idioma">
+                             </div>
+                              <div class="col-12">
+                                <button type="button" id="botn1" class="btn btn-primary" (click)="addCarta(cartaForm)">Guardar</button>
+                                <button type="button" id="bton2" class="btn btn-success" (click)="resetForm(cartaForm)">Limpiar</button>
+                              </div>                             
+                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="container">
+                <h3>Cartas Disponibles:</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Palabra</th>
+                            <th>Traducción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <!-- recorro con un for todas las cartas del arreglo y las muestro -->
+                        <tr *ngFor="let carta of cartaService.cartas">
+                            <td>{{ carta.palabra }}</td>
+                            <!-- para que queremos esto ? -->
+                            <td style="display: none;">{{carta.palabraTrad}}</td>
+                            <td>-Oculto!-</td>
+                            <td>
+                            <!-- usamos la variable "carta" que definimos en el bucle for arriba -->
+                                <a (click)="editarCarta(carta)">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a (click)="eliminarCarta(carta._id)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                                
+                                 <a (click)="mostrarCarta(carta.palabraTrad)">
+                                    <i class="material-icons">find_in_page</i>       
+                                </a>   
+
+                                <!-- <a (click)="revelar()"> 
+                                    <i class="material-icons">translate</i>
+                                </a> -->
+                                <!-- <a (click)="ocultarTrad()"> -->
+                                    <!-- <i class="material-icons">visibility_off</i>
+                                </a> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
